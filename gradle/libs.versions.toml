@@ -6,7 +6,7 @@ dokka = "2.0.0"
 compose = "1.7.3"
 ktor = "3.1.0"
 kover = "0.9.1"
-lexilabs-basic-logging = "0.2.5"
+lexilabs-basic-logging = "0.2.6"
 
 [libraries]
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
