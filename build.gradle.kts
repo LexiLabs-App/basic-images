@@ -14,7 +14,7 @@ dependencies {
 
 allprojects {
     group = "app.lexilabs.basic"
-    version = "0.2.5"
+    version = rootProject.libs.versions.images.get()
 
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "maven-publish")
