@@ -1,10 +1,10 @@
 # Basic-Images
-<img src="images/basic.png" alt="basic" height="240" align="right"/> 
+<img src="images/logo-icon.svg" alt="basic" height="240" align="right"/> 
 
 ![GitHub License](https://img.shields.io/github/license/lexilabs-app/basic-images)
 ![GitHub Release Date](https://img.shields.io/github/release-date/lexilabs-app/basic-images)
 [![Maven Central](https://img.shields.io/maven-central/v/app.lexilabs.basic/basic-images?color=blue)](https://central.sonatype.com/artifact/app.lexilabs.basic/basic-images)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-7f52ff.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.21-7f52ff.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 
 A Kotlin Multiplatform library to rapidly add images to any project.
 
@@ -28,13 +28,12 @@ Add your dependencies from Maven
 ```toml
 # in your 'libs.versions.toml' file
 [versions]
-kotlin = "2.1.20"
+kotlin = "+" # gets the latest version
 compose = "+" # gets the latest version
-lexilabs-basic = "+" #gets the latest version
+images = "+" #gets the latest version
 
 [libraries]
-lexilabs-basic-logging = { module = "app.lexilabs.basic:basic-logging", version.ref = "lexilabs-basic" }
-lexilabs-basic-images = { module = "app.lexilabs.basic:basic-images", version.ref = "lexilabs-basic" }
+lexilabs-basic-images = { module = "app.lexilabs.basic:basic-images", version.ref = "images" }
 
 [plugins] # make sure you're using the JetBrains plugin to import your composables
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }
@@ -50,7 +49,6 @@ plugins {
 
 sourceSets {
     commonMain.dependencies {
-        implementation(libs.lexilabs.basic.logging)
         implementation(libs.lexilabs.basic.images)
     }
 }
