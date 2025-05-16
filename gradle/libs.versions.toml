@@ -14,6 +14,7 @@ kover = "0.9.1"
 lexilabs-basic-logging = "0.2.6"
 
 [libraries]
+dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

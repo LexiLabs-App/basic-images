@@ -1,4 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     alias(libs.plugins.multiplatform).apply(false)
@@ -10,6 +13,12 @@ plugins {
 
 dependencies {
     kover(project(":basic-images"))
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.dokka.base)
+    }
 }
 
 allprojects {
@@ -41,17 +50,23 @@ allprojects {
 
         /** dokka generation **/
         tasks.register<Delete>("clearDokkaHtml") {
-            delete("${projectDir.parent}/docs/${project.name}")
+            delete("${projectDir.parent}/docs")
         }
-        tasks.dokkaHtml {
-            dependsOn("clearDokkaHtml")
-            outputDirectory.set(file("${projectDir.parent}/docs/${project.name}"))
-            moduleName.set(project.name)
-            moduleVersion.set(project.version.toString())
-            failOnWarning.set(false)
-            suppressObviousFunctions.set(true)
-            suppressInheritedMembers.set(false)
-            offlineMode.set(false)
+        tasks.withType<DokkaTask>().configureEach{
+            pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+                dependsOn("clearDokkaHtml")
+                outputDirectory = file("${projectDir.parent}/docs")
+                moduleName = project.name
+                moduleVersion = project.version.toString()
+                customAssets = listOf(file("${projectDir.parent}/images/logo-icon.svg"))
+                // Need to create a cool looking theme at some point
+                //customStyleSheets = listOf(file("${projectDir.parent}/dokka/styles.css"))
+                footerMessage = "(c) 2025 LexiLabs"
+                failOnWarning = false
+                suppressObviousFunctions = true
+                suppressInheritedMembers = false
+                offlineMode = false
+            }
         }
 
         publications {

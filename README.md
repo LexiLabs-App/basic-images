@@ -1,5 +1,5 @@
 # Basic-Images
-<img src="images/basic.png" alt="basic" height="240" align="right"/> 
+<img src="images/logo-icon.svg" alt="basic" height="240" align="right"/> 
 
 ![GitHub License](https://img.shields.io/github/license/lexilabs-app/basic-images)
 ![GitHub Release Date](https://img.shields.io/github/release-date/lexilabs-app/basic-images)
