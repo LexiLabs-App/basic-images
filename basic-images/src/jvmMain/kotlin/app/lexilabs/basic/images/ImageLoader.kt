@@ -10,19 +10,20 @@ import java.io.File
 import javax.imageio.ImageIO
 
 /**
- * Contains [load] functions for [BasicImage] that accepts both [BasicUrl] and [BasicPath] objects.
+ * JVM-specific implementation for loading images from a [BasicUrl] or [BasicPath].
+ * This object provides functions to load images and convert them into an [ImageBitmap].
  */
 @OptIn(ExperimentalBasicImages::class)
 public actual object ImageLoader {
 
     /**
-     * Downloads a PNG, JPEG, or WEBP file from an internet URL using a [BasicUrl] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given [url] and converts it to an [ImageBitmap].
      *
-     * Example:
-     * ```kotlin
-     * val url = BasicUrl("https://picsum.photos/200")
-     * val bitmap = ImageLoader.load(url)
-     * ```
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the network request off the main thread.
+     *
+     * @param url The [BasicUrl] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      */
     public actual suspend fun load(url: BasicUrl): ImageBitmap? {
         var bitmap: ImageBitmap? = null
@@ -37,13 +38,13 @@ public actual object ImageLoader {
     }
 
     /**
-     * Opens a PNG, JPEG, or WEBP file from a local path using a [BasicPath] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given local file [path] and converts it to an [ImageBitmap].
      *
-     * Example:
-     * ```kotlin
-     * val path = BasicPath("appLocalDirectory/cacheDirectory/images/exampleImage.jpeg")
-     * val bitmap = ImageLoader.load(path)
-     * ```
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the file reading off the main thread.
+     *
+     * @param path The [BasicPath] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      */
     public actual suspend fun load(path: BasicPath): ImageBitmap? {
         return withContext(Dispatchers.IO) {
@@ -52,6 +53,9 @@ public actual object ImageLoader {
         }
     }
 
+    /**
+     * Converts a [ByteArray] to an [ImageBitmap].
+     */
     private fun ByteArray.toImageBitmap(): ImageBitmap {
         // Convert ByteArray to BufferedImage
         val inputStream = ByteArrayInputStream(this)

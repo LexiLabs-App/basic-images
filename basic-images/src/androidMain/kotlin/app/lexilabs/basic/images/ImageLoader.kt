@@ -8,13 +8,20 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
- * Contains [load] functions for [BasicImage] that accepts both [BasicUrl] and [BasicPath] objects.
+ * Android-specific implementation for loading images from a [BasicUrl] or [BasicPath].
+ * This object provides functions to load images and convert them into an [ImageBitmap].
  */
 @OptIn(ExperimentalBasicImages::class)
 public actual object ImageLoader {
 
     /**
-     * Downloads a PNG, JPEG, or WEBP file from an internet URL using a [BasicUrl] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given [url] and converts it to an [ImageBitmap].
+     *
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the network request off the main thread.
+     *
+     * @param url The [BasicUrl] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      *
      * Example:
      * ```kotlin
@@ -36,7 +43,13 @@ public actual object ImageLoader {
     }
 
     /**
-     * Opens a PNG, JPEG, or WEBP file from a local path using a [BasicPath] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given local file [path] and converts it to an [ImageBitmap].
+     *
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the file reading off the main thread.
+     *
+     * @param path The [BasicPath] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      *
      * Example:
      * ```kotlin

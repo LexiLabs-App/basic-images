@@ -32,19 +32,20 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.create
 
 /**
- * Contains [load] functions for [BasicImage] that accepts both [BasicUrl] and [BasicPath] objects.
+ * macOS-specific implementation for loading images from a [BasicUrl] or [BasicPath].
+ * This object provides functions to load images and convert them into an [ImageBitmap].
  */
 @OptIn(ExperimentalForeignApi::class, ExperimentalBasicImages::class)
 public actual object ImageLoader {
 
     /**
-     * Downloads a PNG, JPEG, or WEBP file from an internet URL using a [BasicUrl] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given [url] and converts it to an [ImageBitmap].
      *
-     * Example:
-     * ```kotlin
-     * val url = BasicUrl("https://picsum.photos/200")
-     * val bitmap = ImageLoader.load(url)
-     * ```
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the network request off the main thread.
+     *
+     * @param url The [BasicUrl] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      */
     public actual suspend fun load(url: BasicUrl): ImageBitmap? {
         var bitmap: ImageBitmap? = null
@@ -59,13 +60,13 @@ public actual object ImageLoader {
     }
 
     /**
-     * Opens a PNG, JPEG, or WEBP file from a local path using a [BasicPath] object, then provides the [ImageBitmap] file, if available.
+     * Loads an image from the given local file [path] and converts it to an [ImageBitmap].
      *
-     * Example:
-     * ```kotlin
-     * val path = BasicPath("appLocalDirectory/cacheDirectory/images/exampleImage.jpeg")
-     * val bitmap = ImageLoader.load(path)
-     * ```
+     * This function is asynchronous and should be called from a coroutine.
+     * It uses [Dispatchers.IO] to perform the file reading off the main thread.
+     *
+     * @param path The [BasicPath] of the image to load.
+     * @return The loaded [ImageBitmap], or `null` if the image could not be loaded.
      */
     public actual suspend fun load(path: BasicPath): ImageBitmap? {
         return withContext(Dispatchers.IO) {
@@ -73,16 +74,25 @@ public actual object ImageLoader {
         }
     }
 
+    /**
+     * Reads a file from the given [filePath] and converts it to an [ImageBitmap].
+     */
     private fun getFileAsImageBitmap(filePath: String): ImageBitmap? {
         val fileManager = NSFileManager.defaultManager
         val nsData = fileManager.contentsAtPath(filePath)
         return nsData?.toNSImage()?.toImageBitmap()
     }
 
+    /**
+     * Converts a [ByteArray] to an [ImageBitmap].
+     */
     private fun ByteArray.toImageBitmap(): ImageBitmap? {
         return this@toImageBitmap.toNSData().toNSImage().toSkiaImage()?.toComposeImageBitmap()
     }
 
+    /**
+     * Converts a [ByteArray] to an [NSData] object.
+     */
     @OptIn(BetaInteropApi::class)
     private fun ByteArray.toNSData(): NSData {
         memScoped {
@@ -93,15 +103,24 @@ public actual object ImageLoader {
         }
     }
 
+    /**
+     * Converts an [NSData] object to an [NSImage].
+     */
     private fun NSData.toNSImage(): NSImage {
         return NSImage(data = this@toNSImage)
     }
 
+    /**
+     * Converts an [NSImage] to an [ImageBitmap].
+     */
     private fun NSImage.toImageBitmap(): ImageBitmap {
         val skiaImage = this.toSkiaImage() ?: return ImageBitmap(1, 1)
         return skiaImage.toComposeImageBitmap()
     }
 
+    /**
+     * Converts an [NSImage] to a Skia [Image].
+     */
     private fun NSImage.toSkiaImage(): Image? {
         val imageRef = this.CGImageForProposedRect(null, null, null) ?: return null
 

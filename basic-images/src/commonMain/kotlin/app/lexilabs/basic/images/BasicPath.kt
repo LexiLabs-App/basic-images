@@ -1,8 +1,12 @@
 package app.lexilabs.basic.images
 
 /**
- * Used to convert the [String] of an absolute file path to an [BasicPath] object.
- * This was a critical feature to prevent URL Strings from being confused with Path Strings.
+ * Represents a local file path for an image.
+ *
+ * This class is used to distinguish between a URL and a local file path.
+ * It encapsulates the string representation of the path.
+ *
+ * @param pathString The absolute path of the file.
  *
  * Example:
  * ```kotlin
@@ -15,7 +19,7 @@ public class BasicPath(pathString: String) {
     private val path: String = pathString
 
     /**
-     * Returns the Path [String] originally passed to the [BasicPath] object.
+     * Returns the string representation of the file path.
      */
     override fun toString(): String {
         return path
