@@ -1,6 +1,6 @@
 [versions]
 # BUILD
-images = "0.2.6-beta01"
+images = "0.2.6"
 build-sdk-min = "24"
 build-sdk-compile = "35"
 kotlin = "2.1.21"
