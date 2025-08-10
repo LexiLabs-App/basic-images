@@ -1,36 +1,30 @@
 package app.lexilabs.basic.images
 
 /**
- * Indicates the current state of an [BasicImage] as it proceeds through the [ImageLoader.load]
- * cycle
- *
- * @property ImageState.NONE The [BasicImage] has not been initiated
- * @property ImageState.LOADING The bitmap is being downloaded by URL or opened at the Path
- * @property ImageState.SHOWING The [BasicImage] is displaying the bitmap
- * @property ImageState.ERROR An error has occurred
+ * Represents the different states of image loading for a [BasicImage].
  */
 @ExperimentalBasicImages
 public sealed class ImageState {
 
     /**
-     * [ImageState.NONE] indicates [BasicImage] has not been initiated
+     * The initial state before any loading has started.
      */
     public data object NONE: ImageState()
 
     /**
-     * [ImageState.LOADING] indicates the bitmap is being downloaded by URL or opened at the Path
+     * The state while the image is being downloaded or loaded from a local path.
      */
     public data object LOADING: ImageState()
 
     /**
-     * [ImageState.SHOWING] indicates the [BasicImage] is displaying the bitmap
-     *
+     * The state when the image has been successfully loaded and is being displayed.
      */
     public data object SHOWING: ImageState()
 
     /**
-     * [ImageState.ERROR] indicates an error has occurred.
-     * @param message Provides error information for logging as a [String]
+     * The state when an error has occurred during image loading.
+     *
+     * @param message A descriptive error message.
      */
     public data class ERROR(val message: String) : ImageState()
 }

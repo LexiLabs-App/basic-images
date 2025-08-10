@@ -11,11 +11,19 @@ import io.ktor.utils.io.readRemaining
 import kotlinx.io.readByteArray
 
 /**
- * Gets and caches an image file by url[String] after [invoke] of [ImageClient] instance.
+ * A Ktor HTTP client for downloading images from a URL.
+ *
+ * This object handles the network request and provides the image data as a [ByteArray].
+ * It includes basic error handling for common HTTP status codes.
+ *
+ * Note: Caching is configured but currently disabled.
  *
  * Example:
- * ```
- * val image = ImageClient(urlString) // instantiate and request response from URL
+ * ```kotlin
+ * val imageData = ImageClient("https://example.com/image.png")
+ * if (imageData != null) {
+ *     // Use the image data
+ * }
  * ```
  */
 @ExperimentalBasicImages
@@ -34,12 +42,16 @@ public object ImageClient {
     }
 
     /**
-     * [invoke] requests a [HttpResponse] from a url using the [ImageClient].
+     * Asynchronously downloads an image from the given [urlString].
      *
-     * Example:
-     * ```
-     * val image = ImageClient(urlString) // instantiate and request response from URL
-     * ```
+     * This function performs a GET request and handles the following HTTP status codes:
+     * - 200 (OK)
+     * - 404 (Not Found)
+     * - 429 (Rate Limit)
+     * - 500 (Server Error)
+     *
+     * @param urlString The URL of the image to download.
+     * @return A [ByteArray] containing the image data if the request is successful, otherwise `null`.
      */
     public suspend operator fun invoke(urlString: String): ByteArray? {
         return try {

@@ -21,35 +21,20 @@ import androidx.compose.ui.layout.ContentScale
 import app.lexilabs.basic.images.ImageLoader.load
 
 /**
- * A composable that lays out and asynchronously draws a [ImageBitmap] from a given [BasicPath]
- * using a [LaunchedEffect].
+ * A composable that asynchronously loads and displays an image from a local [BasicPath].
  *
- * Example:
- * ```kotlin
- * @Composable
- * fun Test() {
- *     // Loads an image via URL location
- *     BasicImage(path = BasicPath("/images/exampleImage.jpeg"))
- * }
- * ```
+ * While the image is loading, a circular progress indicator can be displayed.
+ * The state of the image loading is tracked by [ImageState].
  *
- * @param path The [BasicPath] to obtain the PNG, JPEG, or WEBP file
- * @param contentDescription text used by accessibility services to describe what this image
- * represents.
- * @param modifier Modifier used to adjust the layout algorithm or draw decoration content (ex.
- * background)
- * @param alignment Optional alignment parameter used to place the [ImageBitmap] in the given
- * bounds defined by the width and height
- * @param contentScale Optional scale parameter used to determine the aspect ratio scaling to be used
- * if the bounds are a different size from the intrinsic size of the [ImageBitmap]
- * @param alpha Optional opacity to be applied to the [ImageBitmap] when it is rendered onscreen
- * @param colorFilter Optional ColorFilter to apply for the [ImageBitmap] when it is rendered
- * onscreen
- * @param filterQuality Sampling algorithm applied to the [ImageBitmap] when it is scaled and drawn
- * into the destination. The default is [FilterQuality.Low] which scales using a bilinear
- * sampling algorithm
- * @param placeholderEnabled Boolean value to determine if the image should be preceded by a
- * circular progress indicator while loading.
+ * @param path The [BasicPath] of the image to be loaded.
+ * @param contentDescription A description of the image for accessibility services.
+ * @param modifier [Modifier] for this composable.
+ * @param alignment The alignment of the image within its bounds.
+ * @param contentScale The scaling of the image within its bounds.
+ * @param alpha The opacity of the image.
+ * @param colorFilter A [ColorFilter] to apply to the image.
+ * @param filterQuality The [FilterQuality] to apply when scaling the image.
+ * @param placeholderEnabled Whether to show a [CircularProgressIndicator] while loading.
  */
 @ExperimentalBasicImages
 @Composable
@@ -92,35 +77,20 @@ public fun BasicImage(
 }
 
 /**
- * A composable that lays out and asynchronously draws a [ImageBitmap] from a given [BasicUrl]
- * using a [LaunchedEffect].
+ * A composable that asynchronously loads and displays an image from a [BasicUrl].
  *
- * Example:
- * ```kotlin
- * @Composable
- * fun Test() {
- *     // Loads an image via URL location
- *     BasicImage(url = BasicUrl("https://picsum.photos/200"))
- * }
- * ```
+ * While the image is loading, a circular progress indicator can be displayed.
+ * The state of the image loading is tracked by [ImageState].
  *
- * @param url The [BasicUrl] to obtain the PNG, JPEG, or WEBP file
- * @param contentDescription text used by accessibility services to describe what this image
- * represents.
- * @param modifier Modifier used to adjust the layout algorithm or draw decoration content (ex.
- * background)
- * @param alignment Optional alignment parameter used to place the [ImageBitmap] in the given
- * bounds defined by the width and height
- * @param contentScale Optional scale parameter used to determine the aspect ratio scaling to be used
- * if the bounds are a different size from the intrinsic size of the [ImageBitmap]
- * @param alpha Optional opacity to be applied to the [ImageBitmap] when it is rendered onscreen
- * @param colorFilter Optional ColorFilter to apply for the [ImageBitmap] when it is rendered
- * onscreen
- * @param filterQuality Sampling algorithm applied to the [ImageBitmap] when it is scaled and drawn
- * into the destination. The default is [FilterQuality.Low] which scales using a bilinear
- * sampling algorithm
- * @param placeholderEnabled Boolean value to determine if the image should be preceded by a
- * circular progress indicator while loading.
+ * @param url The [BasicUrl] of the image to be loaded.
+ * @param contentDescription A description of the image for accessibility services.
+ * @param modifier [Modifier] for this composable.
+ * @param alignment The alignment of the image within its bounds.
+ * @param contentScale The scaling of the image within its bounds.
+ * @param alpha The opacity of the image.
+ * @param colorFilter A [ColorFilter] to apply to the image.
+ * @param filterQuality The [FilterQuality] to apply when scaling the image.
+ * @param placeholderEnabled Whether to show a [CircularProgressIndicator] while loading.
  */
 @ExperimentalBasicImages
 @Composable
@@ -163,7 +133,11 @@ public fun BasicImage(
 }
 
 /**
- * A composable that displays while waiting on a [BasicImage] to load.
+ * A composable that displays a [CircularProgressIndicator] as a placeholder.
+ *
+ * This is shown while a [BasicImage] is loading.
+ *
+ * @param modifier [Modifier] for this composable.
  */
 @ExperimentalBasicImages
 @Composable
