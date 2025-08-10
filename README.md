@@ -15,7 +15,7 @@ A Kotlin Multiplatform library to rapidly add images to any project.
 ![badge-tvos](http://img.shields.io/badge/tvos-no_support-red.svg?style=flat)
 ![badge-nodejs](https://img.shields.io/badge/jsNode-no_support-red.svg?style=flat)
 ![badge-jsBrowser](https://img.shields.io/badge/jsBrowser-no_support-red.svg?style=flat)
-![badge-wasmJsBrowser](https://img.shields.io/badge/wasmJsBrowser-no_support-red.svg?style=flat)
+![badge-wasmJsBrowser](https://img.shields.io/badge/wasmJsBrowser-full_support-65c663.svg?style=flat)
 ![badge-jvm](http://img.shields.io/badge/jvm-full_support-65c663.svg?style=flat)
 ![badge-linux](http://img.shields.io/badge/linux-no_support-red.svg?style=flat)
 ![badge-windows](http://img.shields.io/badge/windows-no_support-red.svg?style=flat)
@@ -56,11 +56,6 @@ sourceSets {
 
 ## Usage
 ```kotlin
-// Other dependencies were omitted to focus on the "basics"
-import app.lexilabs.basic.images.BasicImage
-import app.lexilabs.basic.images.BasicUrl
-import app.lexilabs.basic.images.BasicPath
-
 @Composable
 fun TestComposable() {
     Column {
