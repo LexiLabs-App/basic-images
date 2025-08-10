@@ -17,21 +17,21 @@ kotlin {
     // DON'T FORGET TO RUN `./gradlew apiDump`
     explicitApi()
 
-//    js(IR) {
-//        binaries.executable()
-//        browser {
-//            commonWebpackConfig {
-//                cssSupport {
-//                    enabled.set(true)
-//                }
-//            }
-//            testTask {
-//                useKarma {
-//                    useChromeHeadless()
-//                }
-//            }
-//        }
-//    }
+    js(IR) {
+        binaries.executable()
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled.set(true)
+                }
+            }
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
+        }
+    }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
