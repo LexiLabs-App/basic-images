@@ -2,7 +2,7 @@
 # BUILD
 images = "0.3.1-beta01"
 build-sdk-min = "24"
-build-sdk-compile = "36"
+build-sdk-compile = "37"
 kotlin = "2.4.10"
 agp = "9.2.1"
 bcv = "0.18.1"
