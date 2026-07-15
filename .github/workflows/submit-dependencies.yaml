@@ -1,0 +1,26 @@
+name: Submit Dependencies
+
+on:
+  push:
+    branches: [main]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write # Required to upload the dependency graph
+
+jobs:
+  submit-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17' # Match your project's Java version
+
+      # This action builds the graph, resolves transitives, and uploads it to GitHub
+      - name: Generate and Submit Dependency Graph
+        uses: gradle/actions/dependency-submission@v4
