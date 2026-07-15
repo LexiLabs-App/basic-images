@@ -6,7 +6,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write # Required to upload the dependency graph
   pages: write
   id-token: write
 
@@ -30,12 +30,29 @@ jobs:
       - name: Check api
         run: ./gradlew apiCheck
 
+  submit-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17' # Match your project's Java version
+
+      # This action builds the graph, resolves transitives, and uploads it to GitHub
+      - name: Generate and Submit Dependency Graph
+        uses: gradle/actions/dependency-submission@v4
+
   release:
     name: Release to Sonatype
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: macos-latest
     needs:
       - check
+      - submit-dependencies
 
     steps:
       - uses: actions/checkout@v3
@@ -69,6 +86,7 @@ jobs:
     runs-on: macos-latest
     needs:
       - check
+      - submit-dependencies
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
