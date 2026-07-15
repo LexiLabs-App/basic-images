@@ -1,23 +1,24 @@
 [versions]
 # BUILD
-images = "0.2.7-beta01"
+images = "0.3.0"
 build-sdk-min = "24"
 build-sdk-compile = "35"
-kotlin = "2.1.21"
-agp = "8.12.0"
+kotlin = "2.4.10"
+agp = "9.2.1"
 bcv = "0.18.1"
-dokka = "2.0.0"
+dokka = "2.2.0"
 # DEPENDENCIES
-compose = "1.8.2"
-ktor = "3.2.3"
-kover = "0.9.1"
+compose = "1.11.1"
+material3 = "1.9.0"
+ktor = "3.5.1"
+kover = "0.9.8"
 lexilabs-basic-logging = "0.2.6"
-maven-publish = "0.34.0"
+maven-publish = "0.37.0"
 
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor"}
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor"}
@@ -28,7 +29,7 @@ lexilabs-basic-logging = { module = "app.lexilabs.basic:basic-logging", version.
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-android-library = { id = "com.android.library", version.ref = "agp" }
+multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp"}
 kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "bcv"}
 kotlinx-serialization-plugin = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

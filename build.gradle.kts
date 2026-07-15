@@ -1,11 +1,9 @@
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.DokkaTask
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+
 
 plugins {
     alias(libs.plugins.multiplatform).apply(false)
-    alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.multiplatform.library).apply(false)
     alias(libs.plugins.kotlinx.serialization.plugin)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
@@ -27,23 +25,19 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
 
     /** dokka generation **/
-    tasks.register<Delete>("clearDokkaHtml") {
-        delete("${projectDir.parent}/docs")
-    }
-    tasks.withType<DokkaTask>().configureEach{
-        pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-            dependsOn("clearDokkaHtml")
-            outputDirectory = file("${projectDir.parent}/docs")
-            moduleName = project.name
-            moduleVersion = project.version.toString()
-            customAssets = listOf(file("${projectDir.parent}/images/logo-icon.svg"))
-            // Need to create a cool looking theme at some point
-            //customStyleSheets = listOf(file("${projectDir.parent}/dokka/styles.css"))
-            footerMessage = "(c) 2025 LexiLabs"
-            failOnWarning = false
-            suppressObviousFunctions = true
-            suppressInheritedMembers = false
-            offlineMode = false
+    dokka {
+        moduleName.set(project.name)
+        moduleVersion.set(project.version.toString())
+        dokkaPublications.html {
+            outputDirectory.set(rootDir.resolve("docs"))
+            suppressObviousFunctions.set(true)
+            suppressInheritedMembers.set(false)
+            failOnWarning.set(false)
+            offlineMode.set(false)
+        }
+        pluginsConfiguration.html {
+            customAssets.from(rootDir.resolve("images/logo-icon.svg"))
+            footerMessage.set("(c) 2026 LexiLabs")
         }
     }
 
