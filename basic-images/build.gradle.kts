@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     alias(libs.plugins.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.multiplatform.library)
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
     alias(libs.plugins.dokka)
     alias(libs.plugins.composeCompiler)
@@ -17,7 +17,7 @@ kotlin {
     // DON'T FORGET TO RUN `./gradlew apiDump`
     explicitApi()
 
-    js(IR) {
+    js {
         binaries.executable()
         browser {
             commonWebpackConfig {
@@ -42,13 +42,15 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+    }
 
     listOf(
-        iosX64(), // mobile
         iosArm64(), // mobile
         iosSimulatorArm64(), // mobile
-        macosX64(), // desktop
         macosArm64(), // desktop
     ).forEach {
         it.binaries.framework {
@@ -92,32 +94,13 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
-
-    // Android JVM target target options
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-        compilations.all{
-            compileTaskProvider.configure{
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_17)
-                }
-            }
+    android {
+        namespace = "app.lexilabs.basic.images"
+        compileSdk = rootProject.libs.versions.build.sdk.compile.get().toInt()
+        minSdk = rootProject.libs.versions.build.sdk.min.get().toInt()
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_26)
         }
     }
 }
 
-android {
-    namespace = "app.lexilabs.basic.images"
-    compileSdk = rootProject.libs.versions.build.sdk.compile.get().toInt()
-
-    defaultConfig {
-        minSdk = rootProject.libs.versions.build.sdk.min.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    buildFeatures{
-        compose = true
-    }
-}
