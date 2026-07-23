@@ -11,7 +11,7 @@ dokka = "2.2.0"
 compose = "1.11.1"
 material3 = "1.9.0"
 ktor = "3.5.1"
-kover = "0.9.8"
+kover = "0.9.9"
 lexilabs-basic-logging = "0.3.0"
 maven-publish = "0.37.0"
 
